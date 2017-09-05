@@ -12,5 +12,8 @@ module.exports = {
     },
     jwt:{
         key:'tcc_mathias_chave_jwt'
-    }
+    },
+    session:{
+        key:'tcc_mathias_chave_session'
+    },
 };
