@@ -7,12 +7,17 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 // const mongodb = require('./configuracoes/mongodbConfigs');
-const MongoStore = require('connect-mongo')(session);
+const MongoDBStore = require('connect-mongodb-session')(session);
 const mongodb = require('mongodb').MongoClient;
 const bodyparser = require('body-parser');
 const url = 'mongodb://localhost:27017/testdb';
 const app = express();
 
+const store = new MongoDBStore(
+    {
+        uri: url,
+        collection: 'mySessions'
+    });
 
 app.use(cookieParser());
 // app.use(session({secret: "Shh, its a secret!"}));
@@ -21,13 +26,9 @@ app.use(bodyparser.json());
 app.use(session({
     secret: 'This is a secret',
     cookie: {
-        maxAge: 1000
+        maxAge: 100000
     },
-    store: new MongoStore({
-        url: url,
-        autoRemove: 'interval',
-        autoRemoveInterval: 1 // In minutes. Default
-    }),
+    store: store,
     resave: true,
     saveUninitialized: true,
     autoRemove: 'native'
