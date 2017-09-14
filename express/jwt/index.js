@@ -4,7 +4,7 @@
 
 const http = require('http');
 const app = require('./configuracoes/expressConfigs');
-const porta = require('./configuracoes/servidorConfigs').porta;
+const porta = require('./../../bancoDeDados/servidorConfigs').porta;
 
 http.createServer(app)
     .listen(porta, ()=>{

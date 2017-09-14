@@ -1,24 +1,36 @@
 {
-  "name": "express_jwt",
+  "name": "desempenhodeautenticacao",
   "version": "1.0.0",
-  "description": "Implementacao express com jwt",
+  "description": "Projeto de TCC Mathias Gheno Azzolini 2017",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mathias54/authentication_works.git"
   },
   "keywords": [
-    "express",
-    "jwt"
+    "TCC",
+    "Autenticação",
+    "Node",
+    "Desempenho",
+    "Express",
+    "Joa",
+    "Hapi"
   ],
-  "author": "mathias gheno azzolini",
+  "author": "Mathias Gheno Azzolini",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mathias54/authentication_works/issues"
+  },
+  "homepage": "https://github.com/Mathias54/authentication_works#readme",
   "dependencies": {
+    "mongodb": "^2.2.31",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "express": "^4.15.3",
-    "jsonwebtoken": "^7.4.1",
-    "mongodb": "^2.2.30"
+    "jsonwebtoken": "^7.4.1"
   }
 }

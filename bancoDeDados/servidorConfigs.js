@@ -16,4 +16,7 @@ module.exports = {
     session:{
         key:'tcc_mathias_chave_session'
     },
+    bcrypt: {
+        saltRounds: 10,
+    }
 };

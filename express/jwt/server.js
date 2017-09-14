@@ -20,10 +20,6 @@ if(cluster.isMaster){
         cluster.fork();
     });
 
-    /**
-     * TODO falar com o régio sobre a importância da implementação do Clusters.
-     */
-
 } else {
     require('./index.js');
 }

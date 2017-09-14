@@ -4,7 +4,7 @@
 module.exports = function (app) {
 
     app.all('/', (req, res) =>{
-        res.send('Seja bem-vindo a API. Para acessar os detalhes de filmes você precisa se autenticar');
+        res.send('Rota Principal não autenticada');
     });
 
 };

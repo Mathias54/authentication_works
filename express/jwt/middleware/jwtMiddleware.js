@@ -1,7 +1,7 @@
 /**
  * Created by mathias on 17/07/17.
  */
-const jwt_key = require('../configuracoes/servidorConfigs').jwt.key;
+const jwt_key = require('../../../bancoDeDados/servidorConfigs').jwt.key;
 const jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
