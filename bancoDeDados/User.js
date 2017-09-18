@@ -2,7 +2,6 @@
  * Created by mathias on 05/09/17.
  */
 const mongodb = require('mongodb');
-const url = 'mongodb://localhost:27017/tcc_mathias';
 const dbconnection = require('./mongodbConfigs');
 const {saltRounds} = require('./servidorConfigs').bcrypt.saltRounds;
 const bcrypt = require('bcryptjs');
@@ -17,12 +16,12 @@ const isValidUser = function (User, callback) {
         if (!erro) {
             db.collection('usuario').findOne({usuario: User.usuario}, (erro, user) => {
                 if (!erro && user) {
-                    bcrypt.compare(User.senha, user.senha, function(err, res) {
+                    bcrypt.compare(User.senha, user.senha, (err, res) => {
                         if(!err){
                             if(res) {
                                 callback(false, user);
                             } else {
-                                callback(`Erro ao comprar senhas: ${res}`, null)
+                                callback(`Erro ao comprarar senhas: ${res}`, null)
                             }
                         } else {
                             callback(`Erro na descriptografia: ${err}`)

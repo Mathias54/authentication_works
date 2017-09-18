@@ -7,7 +7,7 @@ module.exports = {
         servidor: 'localhost',
         senha: '',
         usuario: '',
-        db: 'essaMerdaDeMongoDB',
+        db: 'tcc_mathias',
         porta: 27017
     },
     jwt:{

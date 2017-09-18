@@ -1,35 +1,25 @@
 /**
- * Created by mathias on 22/07/17.
+ * Created by mathias on 16/09/17.
  */
-const jwt = require('jsonwebtoken');
-const jwt_key = require('../../../bancoDeDados/servidorConfigs').jwt.key;
-
 const {isValidUser, cadastrarUser} = require('../../../bancoDeDados/User');
 
-module.exports =  (app) => {
+module.exports = (app) =>{
 
-    app.post('/login', (req, res)=>{
-        const query = {
+    app.post('/login', function (req, res) {
+
+        const user = {
             usuario: req.body.login || req.body.email || req.body.nome || req.body.user || req.body.name || req.body.usuario,
             senha: req.body.password || req.body.senha
         };
-        isValidUser(query, (erro, user)=>{
+        console.log(user);
+
+        isValidUser(user, (erro, user) =>{
             if(!erro && user){
-                jwt.sign({id: user._id, usuario: user.usuario}, jwt_key, (erro, token) => {
-                    if(!erro){
-                        res.status(200).json({
-                            sucesso: true,
-                            token: token
-                            /**
-                             * TODO gerar token apenas se não foi gerado anteriormente
-                             */
-                        });
-                    } else {
-                        res.status(400).json({
-                            sucesso: false,
-                            erro: `Erro ocorrido na geração do JWT: ${erro}`
-                        });
-                    }
+                delete user.senha;
+                req.session.user = user;
+                res.status(200).json({
+                    sucesso: true,
+                    mensagem: 'seja bem-vindo'
                 });
             } else {
                 res.status(400).json({
@@ -37,7 +27,7 @@ module.exports =  (app) => {
                     erro: `Erro ocorrido na busca: ${erro}`
                 });
             }
-        })
+        });
     });
 
     app.post('/cadastro', (req, res)=>{
@@ -59,5 +49,4 @@ module.exports =  (app) => {
             }
         });
     });
-
 };

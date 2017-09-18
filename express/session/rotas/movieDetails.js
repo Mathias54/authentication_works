@@ -1,11 +1,11 @@
 /**
  * Created by mathias on 16/08/17.
  */
-const jwt = require('../middleware/jwtMiddleware');
+const sessionMiddleware = require('../middleware/sessionMiddleware');
 const {RotaDetalheFilme, RotaPerfilUsuario} = require('../../../respostas/principal');
 
 module.exports = function (app) {
-    app.get('/filme/:id', jwt, (req, res)=>{
+    app.get('/filme/:id', sessionMiddleware, (req, res)=>{
         const id = req.params.id;
         RotaDetalheFilme(id, retorno =>{
             if(retorno.sucesso){
@@ -16,9 +16,9 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/perfil/', jwt, (req, res)=>{
-        const id = req.sessao.id;
-        console.log(req.sessao);
+    app.get('/perfil/', sessionMiddleware, (req, res)=>{
+        const id = req.session.user._id;
+        console.log(req.session.user._id);
         RotaPerfilUsuario(id, retorno =>{
             if(retorno.sucesso){
                 res.json(retorno.dado);
