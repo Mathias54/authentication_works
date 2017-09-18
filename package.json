@@ -33,6 +33,9 @@
     "cors": "^2.8.4",
     "express": "^4.15.3",
     "express-session": "^1.15.5",
+    "hapi": "^16.6.0",
+    "hapi-auth-jwt2": "^7.3.0",
+    "hapi-server-session": "^3.0.2",
     "jsonwebtoken": "^7.4.1",
     "mongodb": "^2.2.31"
   }
