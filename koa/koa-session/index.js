@@ -5,6 +5,9 @@
 const session = require('koa-session');
 const Koa = require('koa');
 const app = new Koa();
+const Router = require('koa-router');
+const { promisify } = require('util');
+const koaBody = require('koa-body');
 
 app.keys = ['some secret hurr'];
 
@@ -20,19 +23,42 @@ const CONFIG = {
     rolling: false, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. default is false **/
 };
 
+const RotaPrincipal =  promisify(require('../../respostas/principal').RotaPrincipal);
+
 app.use(session(CONFIG, app));
+app.use(koaBody());
 // or if you prefer all default config, just use => app.use(session(app));
 
-app.use(ctx => {
-    // ignore favicon
-    if (ctx.path === '/favicon.ico') return;
-    if(ctx.session.views === 7){
-        ctx.session.teste = 'teste'
-    }
-    let n = ctx.session.views || 0;
-    ctx.session.views = ++n;
-    ctx.body = n + ' views' + ctx.session.teste;
+
+app.use(async(ctx, next)=>{
+   if(ctx.path === '/'){
+       await new Promise((resolve, reject) => {
+           RotaPrincipal(resultado =>{
+              if(resultado.sucesso){
+                  ctx.body = resultado.dados;
+                  console.log('resultado');
+                  resolve();
+              } else {
+                  ctx.body = resultado.erro;
+                  reject();
+              }
+           });
+       });
+   } else {
+       next();
+   }
 });
+
+app.use(async(ctx, next)=>{
+    if(ctx.path === '/post'){
+        let n = ctx.session.views || 0;
+        ctx.session.views = ++n;
+        ctx.body = `resultado: ${ctx.request.body.qqcoisa} + ${ctx.session.views}`;
+    } else {
+        next();
+    }
+});
+
 
 app.listen(3000);
 console.log('listening on port 3000');

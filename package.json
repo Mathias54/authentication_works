@@ -37,6 +37,12 @@
     "hapi-auth-jwt2": "^7.3.0",
     "hapi-server-session": "^3.0.2",
     "jsonwebtoken": "^7.4.1",
+    "koa": "^2.3.0",
+    "koa-better-body": "^3.0.2",
+    "koa-body": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-jwt": "^1.2.0",
+    "koa-router": "^5.4.2",
     "mongodb": "^2.2.31"
   }
 }
