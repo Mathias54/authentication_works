@@ -5,9 +5,10 @@
 const session = require('koa-session');
 const Koa = require('koa');
 const app = new Koa();
-const Router = require('koa-router');
-const { promisify } = require('util');
 const koaBody = require('koa-body');
+const {RotaPrincipal, RotaDetalheFilme, RotaPerfilUsuario} =  require('../../respostas/principal');
+const {isValidUser, cadastrarUser} = require('../../bancoDeDados/User');
+const PORTA_HTTP = 3000;
 
 app.keys = ['some secret hurr'];
 
@@ -23,20 +24,54 @@ const CONFIG = {
     rolling: false, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. default is false **/
 };
 
-const RotaPrincipal =  promisify(require('../../respostas/principal').RotaPrincipal);
-
 app.use(session(CONFIG, app));
 app.use(koaBody());
-// or if you prefer all default config, just use => app.use(session(app));
 
+/**
+ * Rota de Autenticação
+ */
+app.use(async(ctx, next)=>{
+    if(ctx.path === '/login'){
 
+        const query = {
+            usuario: ctx.request.body.login || ctx.request.body.email || ctx.request.body.nome || ctx.request.body.user || ctx.request.body.name || ctx.request.body.usuario,
+            senha: ctx.request.body.password || ctx.request.body.senha
+        };
+        await new Promise((resolve, reject) => {
+            isValidUser(query, (erro, user) => {
+                if (!erro && user) {
+                    query.id = user._id;
+                    ctx.session.logado = query;
+                    ctx.body = {
+                        sucesso: true,
+                        mensagem: 'Usuario logado'
+                    };
+                    console.log('chegou aqui');
+                    resolve();
+                } else {
+                    ctx.body = {
+                        sucesso: false,
+                        erro: `Erro ocorrido na busca: ${erro}`
+                    };
+                    reject();
+                }
+            });
+        });
+    } else {
+        console.log('proximo');
+        await next();
+    }
+});
+
+/**
+ * Rota principal home;
+ */
 app.use(async(ctx, next)=>{
    if(ctx.path === '/'){
        await new Promise((resolve, reject) => {
            RotaPrincipal(resultado =>{
               if(resultado.sucesso){
                   ctx.body = resultado.dados;
-                  console.log('resultado');
                   resolve();
               } else {
                   ctx.body = resultado.erro;
@@ -45,20 +80,64 @@ app.use(async(ctx, next)=>{
            });
        });
    } else {
-       next();
+       await next();
    }
 });
 
+/**
+ * Rota acessar dados perfil
+ */
 app.use(async(ctx, next)=>{
-    if(ctx.path === '/post'){
-        let n = ctx.session.views || 0;
-        ctx.session.views = ++n;
-        ctx.body = `resultado: ${ctx.request.body.qqcoisa} + ${ctx.session.views}`;
+    if(ctx.path === '/perfil'){
+        if(!ctx.session.logado){
+            return ctx.body = 'Usuário não autenticado';
+        }
+        await new Promise((resolve, reject) => {
+            RotaPerfilUsuario(ctx.session.logado.id, retorno =>{
+                if(retorno.sucesso){
+                   ctx.body = retorno.dado;
+                   resolve();
+                } else {
+                    ctx.body = `Erro ao listar detalhes do filme: ${retorno.erro}`;
+                    reject();
+                }
+            });
+        });
     } else {
-        next();
+        await next();
     }
 });
 
+/**
+ * Rota detalhes do filme
+ */
+app.use(async (ctx, next)=>{
+    const rota = ctx.path.split('/');
+    console.log(rota);
+    if(rota[1] === 'filme'){
+        if(!ctx.session.logado){
+            return ctx.body = 'Usuário não autenticado';
+        }
+        if(rota[2]){
+            await new Promise((resolve, reject) => {
+                RotaDetalheFilme(rota[2], retorno => {
+                    if (retorno.erro) {
+                        ctx.body = retorno.erro;
+                        reject();
+                    } else {
+                        ctx.body = retorno.dado;
+                        resolve();
+                    }
+                });
+            });
+        } else {
+            ctx.body = 'Forneça um Id válido para acessar os detalhes';
+        }
+    } else {
+        await next();
+    }
+});
 
-app.listen(3000);
-console.log('listening on port 3000');
+app.listen(PORTA_HTTP, ()=>{
+    console.log(`Servidor levantado na porta ${PORTA_HTTP} `);
+});

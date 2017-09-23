@@ -58,14 +58,14 @@ function RotaDetalheFilme(id, callback) {
                     callback({
                         sucesso: false,
                         erro: `Erro na busca do filme: ${erro}`
-                    })
+                    });
                 }
             });
         } else {
             callback({
                 sucesso: false,
                 erro: `Erro ao conectar com o banco de dados: ${erro}`
-            })
+            });
         }
     })
 }

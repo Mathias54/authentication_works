@@ -18,7 +18,6 @@ module.exports = function (app) {
 
     app.get('/perfil/', sessionMiddleware, (req, res)=>{
         const id = req.session.user._id;
-        console.log(req.session.user._id);
         RotaPerfilUsuario(id, retorno =>{
             if(retorno.sucesso){
                 res.json(retorno.dado);
