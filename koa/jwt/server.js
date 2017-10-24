@@ -5,13 +5,16 @@
  * Created by mathias on 12/09/17.
  */
 const jwt = require('jsonwebtoken');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const Koa = require('koa');
 const jwt_key = require('../../bancoDeDados/servidorConfigs').jwt.key;
 const app = new Koa();
 const koaBody = require('koa-body');
 const {RotaPrincipal, RotaDetalheFilme, RotaPerfilUsuario} =  require('../../respostas/principal');
 const {isValidUser, cadastrarUser} = require('../../bancoDeDados/User');
-const PORTA_HTTP = 3000;
+const {porta, portaHttps} = require('../../bancoDeDados/servidorConfigs');
 
 app.use(koaBody());
 
@@ -178,6 +181,20 @@ app.use(async (ctx, next)=>{
     }
 });
 
-app.listen(PORTA_HTTP, ()=>{
-    console.log(`Servidor levantado na porta ${PORTA_HTTP} `);
-});
+// app.listen(PORTA_HTTP, ()=>{
+//     console.log(`Servidor levantado na porta ${PORTA_HTTP} `);
+// });
+
+http.createServer(app.callback()).listen(porta);
+
+let options = {
+    key  : fs.readFileSync('../../chaves/liberep.key'),
+    cert : fs.readFileSync('../../chaves/8b521c56e11f0512.crt'),
+    ca: [
+        fs.readFileSync('../../chaves/gd_bundle01.crt'),
+        fs.readFileSync('../../chaves/gd_bundle02.crt'),
+        fs.readFileSync('../../chaves/gd_bundle03.crt')
+    ]
+};
+
+https.createServer(options, app.callback()).listen(portaHttps);

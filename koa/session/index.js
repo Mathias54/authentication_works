@@ -5,10 +5,13 @@
 const session = require('koa-session');
 const Koa = require('koa');
 const app = new Koa();
+const fs = require('fs');
+const https = require('https');
+const http = require('http');
 const koaBody = require('koa-body');
 const {RotaPrincipal, RotaDetalheFilme, RotaPerfilUsuario} =  require('../../respostas/principal');
 const {isValidUser, cadastrarUser} = require('../../bancoDeDados/User');
-const PORTA_HTTP = 3000;
+const {portaHttps, porta} = require('../../bancoDeDados/servidorConfigs');
 
 app.keys = ['some secret hurr'];
 
@@ -138,6 +141,16 @@ app.use(async (ctx, next)=>{
     }
 });
 
-app.listen(PORTA_HTTP, ()=>{
-    console.log(`Servidor levantado na porta ${PORTA_HTTP} `);
-});
+http.createServer(app.callback()).listen(porta);
+
+let options = {
+    key  : fs.readFileSync('../../chaves/liberep.key'),
+    cert : fs.readFileSync('../../chaves/8b521c56e11f0512.crt'),
+    ca: [
+        fs.readFileSync('../../chaves/gd_bundle01.crt'),
+        fs.readFileSync('../../chaves/gd_bundle02.crt'),
+        fs.readFileSync('../../chaves/gd_bundle03.crt')
+    ]
+};
+
+https.createServer(options, app.callback()).listen(portaHttps);

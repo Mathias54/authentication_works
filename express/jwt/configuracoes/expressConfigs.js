@@ -13,7 +13,8 @@ app.use('/api', require('../rotas/movieDetails'));
 app.use(cors());
 
 require('../rotas/home')(app);
-require('../rotas/autenticacao')(app);
+require('../rotas/authentication')(app);
 require('../rotas/movieDetails')(app);
 
 module.exports = app;
+
