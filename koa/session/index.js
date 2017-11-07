@@ -10,8 +10,9 @@ const https = require('https');
 const http = require('http');
 const koaBody = require('koa-body');
 const {RotaPrincipal, RotaDetalheFilme, RotaPerfilUsuario} =  require('../../respostas/principal');
-const {isValidUser, cadastrarUser} = require('../../bancoDeDados/User');
-const {portaHttps, porta} = require('../../bancoDeDados/servidorConfigs');
+const {isValidUser} = require('../../bancoDeDados/User');
+const {https_porta, http_porta} = require('../../bancoDeDados/servidorConfigs');
+const executarHttps = process.argv[2] === 'https';
 
 app.keys = ['some secret hurr'];
 
@@ -141,16 +142,18 @@ app.use(async (ctx, next)=>{
     }
 });
 
-http.createServer(app.callback()).listen(porta);
+http.createServer(app.callback()).listen(http_porta);
 
-let options = {
-    key  : fs.readFileSync('../../chaves/liberep.key'),
-    cert : fs.readFileSync('../../chaves/8b521c56e11f0512.crt'),
-    ca: [
-        fs.readFileSync('../../chaves/gd_bundle01.crt'),
-        fs.readFileSync('../../chaves/gd_bundle02.crt'),
-        fs.readFileSync('../../chaves/gd_bundle03.crt')
-    ]
-};
+if(executarHttps){
+    let options = {
+        key  : fs.readFileSync('../../chaves/liberep.key'),
+        cert : fs.readFileSync('../../chaves/8b521c56e11f0512.crt'),
+        ca: [
+            fs.readFileSync('../../chaves/gd_bundle01.crt'),
+            fs.readFileSync('../../chaves/gd_bundle02.crt'),
+            fs.readFileSync('../../chaves/gd_bundle03.crt')
+        ]
+    };
 
-https.createServer(options, app.callback()).listen(portaHttps);
+    https.createServer(options, app.callback()).listen(https_porta);
+}
