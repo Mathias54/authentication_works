@@ -1,6 +1,14 @@
 /**
  * Created by mathias on 16/09/17.
  */
+const { performance } = require('perf_hooks');
+global.marcador = performance;
+global.compararMarks = function (nome, p1, p2) {
+    performance.measure(nome, p1, p2);
+    console.log(performance.getEntriesByName(nome));
+    // TODO persistir banco de dados o resultado.... analisar....
+};
+
 const http = require('http');
 const https = require('https');
 const fs = require('fs');

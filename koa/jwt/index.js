@@ -4,6 +4,15 @@
 /**
  * Created by mathias on 12/09/17.
  */
+const { performance } = require('perf_hooks');
+global.marcador = performance;
+global.compararMarks = function (nome, p1, p2) {
+    performance.measure(nome, p1, p2);
+    console.log(performance.getEntriesByName(nome));
+    // TODO persistir banco de dados o resultado.... analisar....
+};
+
+
 const jwt = require('jsonwebtoken');
 const http = require('http');
 const https = require('https');
@@ -25,7 +34,7 @@ app.use(koaBody());
  */
 app.use(async(ctx, next)=>{
     if(ctx.path === '/login'){
-
+        marcador.mark('INI_LOGIN');
         const query = {
             usuario: ctx.request.body.login || ctx.request.body.email || ctx.request.body.nome || ctx.request.body.user || ctx.request.body.name || ctx.request.body.usuario,
             senha: ctx.request.body.password || ctx.request.body.senha
@@ -43,6 +52,8 @@ app.use(async(ctx, next)=>{
                                  * TODO gerar token apenas se não foi gerado anteriormente
                                  */
                             };
+                            marcador.mark('FIM_LOGIN');
+                            compararMarks('LOGIN_KOA_JWT', 'INI_LOGIN', 'FIM_LOGIN');
                             resolve();
                         } else {
                             ctx.body ={
@@ -67,17 +78,21 @@ app.use(async(ctx, next)=>{
     }
 });
 
+// TODO fazer rota de cadastro
 
 /**
  * Rota principal home; (Não protegida)
  */
 app.use(async(ctx, next)=>{
     if(ctx.path === '/'){
+        marcador.mark('INI_HOME');
         await new Promise((resolve, reject) => {
             RotaPrincipal(resultado =>{
                 if(resultado.sucesso){
                     console.log(resultado.dados);
                     ctx.body = resultado.dados;
+                    marcador.mark('FIM_HOME');
+                    compararMarks('HOME_KOA_JWT', 'INI_HOME', 'FIM_HOME');
                     resolve();
                 } else {
                     ctx.body = resultado.erro;
@@ -94,7 +109,7 @@ app.use(async(ctx, next)=>{
  * Middleware de proteção.
  */
 app.use(async(ctx, next)=>{
-
+    marcador.mark('INI_MIDDLEWARE');
     const token = ctx.request.body.token;
         // || ctx.request.param.token
         // || ctx.request.headers['x-access-token']
@@ -112,6 +127,8 @@ app.use(async(ctx, next)=>{
                 if (err) {
                     reject(err);
                 } else {
+                    marcador.mark('FIM_MIDDLEWARE');
+                    compararMarks('MIDDLEWARE_KOA_JWT', 'INI_MIDDLEWARE', 'FIM_MIDDLEWARE');
                     resolve(decoded);
                 }
             });
@@ -139,11 +156,14 @@ app.use(async(ctx, next)=>{
  */
 app.use(async(ctx, next)=>{
     if(ctx.path === '/perfil'){
+        marcador.mark('INI_PERFIL');
         await new Promise((resolve, reject) => {
             const id = ctx.request.session.id;
             RotaPerfilUsuario(id, retorno =>{
                 if(retorno.sucesso){
                     ctx.body = retorno.dado;
+                    marcador.mark('FIM_PERFIL');
+                    compararMarks('PERFIL_KOA_JWT', 'INI_PERFIL', 'FIM_PERFIL');
                     resolve();
                 } else {
                     ctx.body = `Erro ao listar detalhes do filme: ${retorno.erro}`;
@@ -164,6 +184,7 @@ app.use(async (ctx, next)=>{
     console.log(rota);
     if(rota[1] === 'filme'){
         if(rota[2]){
+            marcador.mark('INI_FILMEID');
             await new Promise((resolve, reject) => {
                 RotaDetalheFilme(rota[2], retorno => {
                     if (retorno.erro) {
@@ -171,6 +192,8 @@ app.use(async (ctx, next)=>{
                         reject();
                     } else {
                         ctx.body = retorno.dado;
+                        marcador.mark('FIM_FILMEID');
+                        compararMarks('FILMEID_KOA_JWT', 'INI_FILMEIF', 'FIM_FILMEID');
                         resolve();
                     }
                 });

@@ -12,7 +12,7 @@ module.exports = function (app) {
             if(retorno.sucesso){
                 res.json(retorno.dado);
                 marcador.mark('FIM_FILMEID');
-                compararMarks('FILMEID', 'INI_FILMEIF', 'FIM_FILMEID');
+                compararMarks('FILMEID_EXPRESS_JWT', 'INI_FILMEIF', 'FIM_FILMEID');
             } else {
                 res.send(`Erro ao listar detalhes do filme: ${retorno.erro}`);
             }
@@ -27,7 +27,7 @@ module.exports = function (app) {
             if(retorno.sucesso){
                 res.json(retorno.dado);
                 marcador.mark('FIM_PERFIL');
-                compararMarks('PERFIL', 'INI_PERFIL', 'FIM_PERFIL');
+                compararMarks('PERFIL_EXPRESS_JWT', 'INI_PERFIL', 'FIM_PERFIL');
             } else {
                 res.send(`Erro ao listar detalhes do filme: ${retorno.erro}`);
             }

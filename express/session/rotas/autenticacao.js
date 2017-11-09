@@ -7,6 +7,8 @@ module.exports = (app) =>{
 
     app.post('/login', function (req, res) {
 
+        marcador.mark('INI_LOGIN');
+
         const user = {
             usuario: req.body.login || req.body.email || req.body.nome || req.body.user || req.body.name || req.body.usuario,
             senha: req.body.password || req.body.senha
@@ -21,6 +23,8 @@ module.exports = (app) =>{
                     sucesso: true,
                     mensagem: 'seja bem-vindo'
                 });
+                marcador.mark('FIM_LOGIN');
+                compararMarks('LOGIN_EXPRESS_SESSION', 'INI_LOGIN', 'FIM_LOGIN');
             } else {
                 res.status(400).json({
                     sucesso: false,
@@ -31,6 +35,9 @@ module.exports = (app) =>{
     });
 
     app.post('/cadastro', (req, res)=>{
+
+        marcador.mark('INI_CADASTRO');
+
         const query = {
             usuario: req.body.login || req.body.email || req.body.nome || req.body.user || req.body.name || req.body.usuario,
             senha: req.body.password || req.body.senha
@@ -41,6 +48,8 @@ module.exports = (app) =>{
                     sucesso: true,
                     usuario: query
                 });
+                marcador.mark('FIM_CADASTRO');
+                compararMarks('CADASTRO_EXPRESS_SESSION', 'INI_CADASTRO', 'FIM_CADASTRO');
             } else {
                 res.status(400).json({
                     sucesso: false,

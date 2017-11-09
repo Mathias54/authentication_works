@@ -31,7 +31,7 @@ module.exports =  (app) => {
                         });
 
                         marcador.mark('FIM_LOGIN');
-                        compararMarks('LOGIN', 'INI_LOGIN', 'FIM_LOGIN');
+                        compararMarks('LOGIN_EXPRESS_JWT', 'INI_LOGIN', 'FIM_LOGIN');
 
                     } else {
                         res.status(400).json({
@@ -66,7 +66,7 @@ module.exports =  (app) => {
                 });
 
                 marcador.mark('FIM_CADASTRO');
-                compararMarks('CADASTRO', 'INI_CADASTRO', 'FIM_CADASTRO');
+                compararMarks('CADASTRO_EXPRESS_JWT', 'INI_CADASTRO', 'FIM_CADASTRO');
 
 
             } else {

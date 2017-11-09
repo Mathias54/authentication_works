@@ -1,6 +1,13 @@
 /**
  * Created by mathias on 12/09/17.
  */
+const { performance } = require('perf_hooks');
+global.marcador = performance;
+global.compararMarks = function (nome, p1, p2) {
+    performance.measure(nome, p1, p2);
+    console.log(performance.getEntriesByName(nome));
+    // TODO persistir banco de dados o resultado.... analisar....
+};
 
 const session = require('koa-session');
 const Koa = require('koa');
@@ -36,7 +43,7 @@ app.use(koaBody());
  */
 app.use(async(ctx, next)=>{
     if(ctx.path === '/login'){
-
+        marcador.mark('INI_LOGIN');
         const query = {
             usuario: ctx.request.body.login || ctx.request.body.email || ctx.request.body.nome || ctx.request.body.user || ctx.request.body.name || ctx.request.body.usuario,
             senha: ctx.request.body.password || ctx.request.body.senha
@@ -50,7 +57,8 @@ app.use(async(ctx, next)=>{
                         sucesso: true,
                         mensagem: 'Usuario logado'
                     };
-                    console.log('chegou aqui');
+                    marcador.mark('FIM_LOGIN');
+                    compararMarks('LOGIN_KOA_SESSION', 'INI_LOGIN', 'FIM_LOGIN');
                     resolve();
                 } else {
                     ctx.body = {
@@ -72,10 +80,13 @@ app.use(async(ctx, next)=>{
  */
 app.use(async(ctx, next)=>{
    if(ctx.path === '/'){
+       marcador.mark('INI_HOME');
        await new Promise((resolve, reject) => {
            RotaPrincipal(resultado =>{
               if(resultado.sucesso){
-                  ctx.body = resultado.dados;
+                  ctx.body = resultado.dados
+                  marcador.mark('FIM_HOME');
+                  compararMarks('HOME_KOA_SESSION', 'INI_HOME', 'FIM_HOME');
                   resolve();
               } else {
                   ctx.body = resultado.erro;
@@ -93,6 +104,7 @@ app.use(async(ctx, next)=>{
  */
 app.use(async(ctx, next)=>{
     if(ctx.path === '/perfil'){
+        marcador.mark('INI_PERFIL');
         if(!ctx.session.logado){
             return ctx.body = 'Usuário não autenticado';
         }
@@ -100,6 +112,8 @@ app.use(async(ctx, next)=>{
             RotaPerfilUsuario(ctx.session.logado.id, retorno =>{
                 if(retorno.sucesso){
                    ctx.body = retorno.dado;
+                    marcador.mark('FIM_PERFIL');
+                    compararMarks('PERFIL_KOA_SESSION', 'INI_PERFIL', 'FIM_PERFIL');
                    resolve();
                 } else {
                     ctx.body = `Erro ao listar detalhes do filme: ${retorno.erro}`;
@@ -119,6 +133,7 @@ app.use(async (ctx, next)=>{
     const rota = ctx.path.split('/');
     console.log(rota);
     if(rota[1] === 'filme'){
+        marcador.mark('INI_FILMEID');
         if(!ctx.session.logado){
             return ctx.body = 'Usuário não autenticado';
         }
@@ -130,6 +145,8 @@ app.use(async (ctx, next)=>{
                         reject();
                     } else {
                         ctx.body = retorno.dado;
+                        marcador.mark('FIM_FILMEID');
+                        compararMarks('FILMEID_KOA_SESSION', 'INI_FILMEIF', 'FIM_FILMEID');
                         resolve();
                     }
                 });
@@ -141,6 +158,7 @@ app.use(async (ctx, next)=>{
         await next();
     }
 });
+
 
 http.createServer(app.callback()).listen(http_porta);
 

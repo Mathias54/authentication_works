@@ -16,7 +16,7 @@ module.exports = function (app) {
               res.json(retorno.dados);
 
               marcador.mark('FIM_HOME');
-              compararMarks('HOME', 'INI_HOME', 'FIM_HOME');
+              compararMarks('HOME_EXPRESS_JWT', 'INI_HOME', 'FIM_HOME');
 
           } else {
               res.send(`Erro ao listar: ${retorno.erro}`);

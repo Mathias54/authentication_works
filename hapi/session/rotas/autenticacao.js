@@ -8,7 +8,7 @@ const jwt_key = require('../../../bancoDeDados/servidorConfigs').jwt.key;
 module.exports = {
 
     cadastro_rota: (request, reply) => {
-
+        marcador.mark('INI_CADASTRO');
         const query = {
             usuario: request.payload.login || request.payload.email || request.payload.nome || request.payload.user || request.payload.name || request.payload.usuario,
             senha: request.payload.password || request.payload.senha
@@ -21,6 +21,8 @@ module.exports = {
                     sucesso: true,
                     usuario: query
                 });
+                marcador.mark('FIM_CADASTRO');
+                compararMarks('CADASTRO_HAPI_SESSION', 'INI_CADASTRO', 'FIM_CADASTRO');
             } else {
                 reply({
                     sucesso: false,
@@ -31,6 +33,7 @@ module.exports = {
     },
 
     login_rota: (request, reply)=> {
+        marcador.mark('INI_LOGIN');
         const query = {
             usuario: request.payload.login || request.payload.email || request.payload.nome || request.payload.user || request.payload.name || request.payload.usuario,
             senha: request.payload.password || request.payload.senha
@@ -41,7 +44,9 @@ module.exports = {
                 reply({
                     sucesso: true,
                     mensagem: 'Usuario logado'
-                })
+                });
+                marcador.mark('FIM_LOGIN');
+                compararMarks('LOGIN_HAPI_SESSION', 'INI_LOGIN', 'FIM_LOGIN');
             } else {
                 reply({
                     sucesso: false,
