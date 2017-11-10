@@ -2,7 +2,7 @@
  * Created by mathias on 22/07/17.
  */
 module.exports = {
-    http_porta: 3000,
+    http_porta: 3001,
     https_porta: 443,
     mongodb :{
         servidor: 'localhost',
