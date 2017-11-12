@@ -1,8 +1,9 @@
-var express = require('express')
-var session = require('express-session')
+var express = require('express');
+var session = require('express-session');
+var cors = require('cors');
 
 var app = express();
-
+app.use(cors());
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
