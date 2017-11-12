@@ -38,7 +38,7 @@ module.exports = function () {
 
     http.createServer(app)
         .listen(http_porta, ()=>{
-            console.log(`servidor HTTP rodando na porta ${http_porta}`);
+            console.log(`servidor JWT Express HTTP rodando na porta ${http_porta}`);
         });
 };
 

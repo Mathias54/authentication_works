@@ -110,7 +110,7 @@ module.exports = function () {
      */
     app.use(async (ctx, next) => {
         marcador.mark('INI_MIDDLEWARE');
-        const token = ctx.request.body.token;
+        const token = ctx.request.body.token|| ctx.request.headers['authorization'];
         // || ctx.request.param.token
         // || ctx.request.headers['x-access-token']
         // || ctx.request.headers['X-Access-Token']

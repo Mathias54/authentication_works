@@ -10,9 +10,9 @@ const dominio = '192.168.0.15';
 
 const url = {
     home: `http://${dominio}:3000/`,
-    login: `http://${dominio}:3000/login/`,
+    login: `http://${dominio}:3000/login`,
     filme: `http://${dominio}:3000/filme/`,
-    perfil: `http://${dominio}:3000/perfil/`,
+    perfil: `http://${dominio}:3000/perfil`,
 };
 
 const id_filmes = [
@@ -36,7 +36,7 @@ const rotas = [
 
 let aux_cont = 0;
 
-let valorconnectsid = '';
+let valorToken = '';
 
 function fazerLogin(usuario, senha) {
 
@@ -58,16 +58,15 @@ function fazerLogin(usuario, senha) {
 
 }
 
-function registraCookieId(stringCookie) {
+function registraJWT(respostaLoginBody) {
 
     /**
      * A resposta do http para cookies vem no formado string,
      * por conta disso eu preciso pegar o dado na mão.
      */
+    valorToken = JSON.parse(respostaLoginBody.body).token;
+    return valorToken;
 
-    const connectsid = stringCookie.split(';')[0];
-    valorconnectsid = connectsid.split('=')[1];
-    return valorconnectsid;
 }
 
 function acessarInfoFilmesAleatorio() {
@@ -79,8 +78,10 @@ function acessarInfoFilmesAleatorio() {
      */
 
     const params =  {
-        headers: { "Content-Type": "application/json" },
-        cookies: { "connect.sid": { value: valorconnectsid, replace: true }}
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": valorToken
+        }
     };
 
     const id_aleatorio = Math.floor(Math.random() * (id_filmes.length));
@@ -101,8 +102,10 @@ function acessarPerfilUsuario() {
      */
 
     const params =  {
-        headers: { "Content-Type": "application/json" },
-        cookies: { "connect.sid": { value: valorconnectsid, replace: true }}
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": valorToken
+        }
     };
 
     return http.get(url.perfil, params);
@@ -121,8 +124,13 @@ export default function() {
 
     if(aux_cont === 0){
         const respostaAutenticacao = fazerLogin('mathias', '123');
-        registraCookieId(respostaAutenticacao.cookies);
+        registraJWT(respostaAutenticacao);
     }
+
+    // const respostaAutenticacao = fazerLogin('mathias', '123');
+    // console.log(respostaAutenticacao.body);
+    // registraJWT(respostaAutenticacao);
+    // console.log(acessarInfoFilmesAleatorio().body);
 
     sleep(1);
 
