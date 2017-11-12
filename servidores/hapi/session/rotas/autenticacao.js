@@ -1,9 +1,9 @@
 /**
  * Created by mathias on 18/09/17.
  */
-const {isValidUser, cadastrarUser} = require('../../../bancoDeDados/User');
+const {isValidUser, cadastrarUser} = require(__dirname + '/../../../bancoDeDados/User');
 const jwt = require('jsonwebtoken');
-const jwt_key = require('../../../bancoDeDados/servidorConfigs').jwt.key;
+const jwt_key = require(__dirname + '/../../../bancoDeDados/servidorConfigs').jwt.key;
 
 module.exports = {
 

@@ -130,7 +130,7 @@ export default function() {
     // const respostaAutenticacao = fazerLogin('mathias', '123');
     // console.log(respostaAutenticacao.body);
     // registraJWT(respostaAutenticacao);
-    // console.log(acessarInfoFilmesAleatorio().body);
+    // console.log(acessarPerfilUsuario().body);
 
     sleep(1);
 

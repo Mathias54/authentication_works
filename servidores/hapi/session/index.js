@@ -50,8 +50,16 @@ module.exports = function () {
 
         server.route([
             {
-                method: 'GET', path: '/',
+                method: 'GET',
+                path: '/',
                 handler: home_rota
+            },
+            {
+                method: 'GET',
+                path: '/test',
+                handler: function (request, reply) {
+                    reply('Hello!');
+                }
             },
             {
                 method: 'GET', path: '/filme/{id}',
