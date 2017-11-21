@@ -33,12 +33,16 @@ module.exports = function () {
                 fs.readFileSync(__dirname + '/../../chaves/gd_bundle03.crt')
             ]
         };
-
         server.connection({port: https_porta, tls: options});
     }
 
     const hapi_session = {
         register: require('hapi-server-session'),
+        options: {
+            cookie: {
+                isSecure: false,
+            },
+        },
     };
 
     server.register(hapi_session, function (err) {
@@ -47,44 +51,44 @@ module.exports = function () {
             console.log(`Erro ao adicionar o hapi-server-session: ${err}`);
         }
 
-
-        server.route([
-            {
-                method: 'GET',
-                path: '/',
-                handler: home_rota
-            },
-            {
-                method: 'GET',
-                path: '/test',
-                handler: function (request, reply) {
-                    reply('Hello!');
-                }
-            },
-            {
-                method: 'GET', path: '/filme/{id}',
-                handler: info_rota
-            },
-            {
-                method: 'GET', path: '/perfil',
-                handler: perfil_rota
-            },
-            {
-                method: 'POST', path: '/cadastro',
-                handler: cadastro_rota
-            },
-            {
-                method: 'POST', path: '/login',
-                handler: login_rota
+        server.register(require('hapi-cors'), function () {
+            if (err) {
+                console.log(`Erro ao adicionar o hapi-cors: ${err}`);
             }
-        ]);
+
+            server.register(require('hapi-postman'), function () {
+                if (err) {
+                    console.log(`Erro ao adicionar o hapi-postoman: ${err}`);
+                }
+
+                server.route([
+                    {
+                        method: 'GET',
+                        path: '/',
+                        handler: home_rota
+                    },
+                    {
+                        method: 'GET', path: '/filme/{id}',
+                        handler: info_rota
+                    },
+                    {
+                        method: 'GET', path: '/perfil',
+                        handler: perfil_rota
+                    },
+                    {
+                        method: 'POST', path: '/cadastro',
+                        handler: cadastro_rota
+                    },
+                    {
+                        method: 'POST', path: '/login',
+                        handler: login_rota
+                    }
+                ]);
+            });
+        });
     });
 
-    /**
-     * TODO não funciona no POSTMAN.
-     */
-
     server.start(_ => {
-        console.log('Servidor rodando');
+        console.log('Servidor rodando na porta ', http_porta);
     });
 };
