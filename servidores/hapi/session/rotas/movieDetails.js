@@ -29,7 +29,7 @@ module.exports = {
         if(!request.session.logado){
             return reply('Autenticação necessário para acessar essa rota');
         }
-        const id = request.sessao.id;
+        const id = request.session.user._id;
         RotaPerfilUsuario(id, retorno => {
             if (retorno.sucesso) {
                 reply(retorno.dado);

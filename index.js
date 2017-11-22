@@ -6,4 +6,4 @@ const express_session = require('./servidores/express/session');
 const hapi_session = require('./servidores/hapi/session');
 const koa_session = require('./servidores/koa/session');
 
-hapi_jwt();
+hapi_session();

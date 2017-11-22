@@ -40,7 +40,8 @@ module.exports = {
         };
         isValidUser(query, (erro, user) => {
             if (!erro && user) {
-                request.session.logado = query;
+                request.session.user = user;
+                request.session.logado = true;
                 reply({
                     sucesso: true,
                     mensagem: 'Usuario logado'
@@ -54,8 +55,6 @@ module.exports = {
                 });
             }
         })
-        // request.session.logado = true;
-        // reply("ok");
     }
 
 };
