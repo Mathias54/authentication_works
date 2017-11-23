@@ -2,7 +2,7 @@ import http from "k6/http";
 import { sleep, check } from "k6";
 
 export let options = {
-    vus: 1,
+    vus: 10,
     duration: "5s"
 };
 
@@ -127,5 +127,5 @@ export default function() {
     } else {
         acessarRotasAleatorio();
     }
-    sleep(1);
+    // sleep(1);
 };

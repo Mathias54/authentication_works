@@ -2,8 +2,8 @@ import http from "k6/http";
 import { sleep, check } from "k6";
 
 export let options = {
-    vus: 1,
-    duration: "1s"
+    vus: 10,
+    duration: "5s"
 };
 
 const dominio = '192.168.0.15';
@@ -65,8 +65,7 @@ function registraCookieId(stringCookie) {
      * por conta disso eu preciso pegar o dado na mão.
      */
 
-    const connectsid = stringCookie.split(';')[0];
-    valorconnectsid = connectsid.split('=')[1];
+    valorconnectsid = stringCookie.cookies['connect.sid'][0].value;
     return valorconnectsid;
 }
 
@@ -117,15 +116,11 @@ function acessarHome() {
 
 export default function() {
 
-    acessarRotasAleatorio();
-
     if(aux_cont === 0){
         const respostaAutenticacao = fazerLogin('mathias', '123');
-        registraCookieId(respostaAutenticacao.cookies);
+        registraCookieId(respostaAutenticacao);
+        aux_cont ++;
+    } else {
+        acessarRotasAleatorio();
     }
-
-    sleep(1);
-
-    aux_cont ++;
-
 };
