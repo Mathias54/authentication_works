@@ -3,7 +3,7 @@ import { sleep, check } from "k6";
 
 export let options = {
     vus: 1,
-    duration: "2s"
+    duration: "5s"
 };
 
 const dominio = '192.168.0.15';
@@ -35,8 +35,8 @@ const rotas = [
 ];
 
 let aux_cont = 0;
-
-let valorconnectsid = '';
+let koa = '';
+let koasig = '';
 
 function fazerLogin(usuario, senha) {
 
@@ -65,9 +65,9 @@ function registraCookieId(stringCookie) {
      * por conta disso eu preciso pegar o dado na mão.
      */
 
-    const connectsid = stringCookie.split(';')[0];
-    valorconnectsid = connectsid.split('=')[1];
-    return valorconnectsid;
+    koa = stringCookie.cookies['koa'][0].value;
+    koasig = stringCookie.cookies['koa.sig'][0].value;
+    return {koa, koasig};
 }
 
 function acessarInfoFilmesAleatorio() {
@@ -79,8 +79,10 @@ function acessarInfoFilmesAleatorio() {
      */
 
     const params =  {
-        headers: { "Content-Type": "application/json" },
-        cookies: { "connect.sid": { value: valorconnectsid, replace: true }}
+        headers: {  "Content-Type": "application/json" },
+        cookies: {  "koa": { value: koa, replace: true },
+            "koa.sig": { value: koasig, replace: true }
+        }
     };
 
     const id_aleatorio = Math.floor(Math.random() * (id_filmes.length));
@@ -99,7 +101,15 @@ function acessarPerfilUsuario() {
      * Por conta disso, é configurado o params da requisicao.
      * O ID é escolhido aleatoriamente para facilitar os testes e não possibitar cache facilitado do mongodb
      */
-    return http.get(url.perfil);
+
+    const params =  {
+        headers: {  "Content-Type": "application/json" },
+        cookies: {  "koa": { value: koa, replace: true },
+            "koa.sig": { value: koasig, replace: true }
+        }
+    };
+
+    return http.get(url.perfil, params);
 }
 
 function acessarHome() {
@@ -110,6 +120,12 @@ function acessarHome() {
 }
 
 export default function() {
-    console.log(fazerLogin('mathias', '123').body);
-    console.log(acessarPerfilUsuario().body);
+    if(aux_cont === 0){
+        const respostaAutenticacao = fazerLogin('mathias', '123');
+        registraCookieId(respostaAutenticacao);
+        aux_cont ++
+    } else {
+        acessarRotasAleatorio();
+    }
+    sleep(1);
 };
