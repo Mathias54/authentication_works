@@ -2,13 +2,19 @@
  * Created by mathias on 22/07/17.
  */
 const MongoClient = require('mongodb').MongoClient;
-const mongo_configs = require('./servidorConfigs').mongodb;
+const db_conf = require('./servidorConfigs').mongodb;
 
-let url = `mongodb://${mongo_configs.servidor}:${mongo_configs.porta}/${mongo_configs.db}`;
+let url = `mongodb://${db_conf.servidor}:${db_conf.porta}/${db_conf.db}`;
 
-if(mongo_configs.senha !== ''){
-    url = `mongodb://${mongo_configs.usuario}:${mongo_configs.senha}@${mongo_configs.servidor}:${mongo_configs.porta}/${mongo_configs.db}`;
+if(db_conf.senha !== ''){
+    url = `mongodb://${db_conf.usuario}:${db_conf.senha}@${db_conf.servidor}:${db_conf.porta}/${db_conf.db}`;
 }
+
+if(db_conf.replicaSet){
+    url = `mongodb://${db_conf.usuario}:${db_conf.senha}@${db_conf.replicaSet.rs01},${db_conf.replicaSet.rs02},${db_conf.replicaSet.rs03}/${db_conf.db}?replicaSet=${db_conf.replicaSet.nome};`
+}
+
+console.log(url);
 
 /**
  * Função que encapsula a conexão com o MongoDB
@@ -17,6 +23,6 @@ if(mongo_configs.senha !== ''){
  */
 module.exports = function (callback) {
     MongoClient.connect(url, (err, db) =>{
-        callback(err, db);
+        callback(err, db.db('tcc_mathias'));
     });
 };

@@ -2,7 +2,7 @@
  * Created by mathias on 18/09/17.
  */
 
-const {RotaPrincipal} = require(__dirname + '/../../../respostas/principal');
+const {RotaPrincipal} = require(__dirname + '/../../../respostas/principal.js');
 
 module.exports = {
 

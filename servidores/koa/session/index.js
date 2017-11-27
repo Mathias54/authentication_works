@@ -78,7 +78,7 @@ module.exports = function () {
     });
 
     /**
-     * Rota principal home;
+     * Rota principal.js home;
      */
     app.use(async (ctx, next) => {
         if (ctx.path === '/') {

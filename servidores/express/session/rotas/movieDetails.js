@@ -5,6 +5,7 @@ const sessionMiddleware = require('../middleware/sessionMiddleware');
 const {RotaDetalheFilme, RotaPerfilUsuario} = require('../../../respostas/principal');
 
 module.exports = function (app) {
+
     app.get('/filme/:id', sessionMiddleware, (req, res)=>{
         marcador.mark('INI_FILMEID');
         const id = req.params.id;

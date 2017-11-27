@@ -81,7 +81,7 @@ module.exports = function () {
 // TODO fazer rota de cadastro
 
     /**
-     * Rota principal home; (Não protegida)
+     * Rota principal.js home; (Não protegida)
      */
     app.use(async (ctx, next) => {
         if (ctx.path === '/') {
