@@ -35,8 +35,8 @@ const rotas = [
 ];
 
 let aux_cont = 0;
-let koa = '';
-let koasig = '';
+
+let valorconnectsid = '';
 
 function fazerLogin(usuario, senha) {
 
@@ -65,9 +65,8 @@ function registraCookieId(stringCookie) {
      * por conta disso eu preciso pegar o dado na mão.
      */
 
-    koa = stringCookie.cookies['koa'][0].value;
-    koasig = stringCookie.cookies['koa.sig'][0].value;
-    return {koa, koasig};
+    valorconnectsid = stringCookie.cookies.id[0].value;
+    return valorconnectsid;
 }
 
 function acessarInfoFilmesAleatorio() {
@@ -79,10 +78,8 @@ function acessarInfoFilmesAleatorio() {
      */
 
     const params =  {
-        headers: {  "Content-Type": "application/json" },
-        cookies: {  "koa": { value: koa, replace: true },
-            "koa.sig": { value: koasig, replace: true }
-        }
+        headers: { "Content-Type": "application/json" },
+        cookies: { "id": { value: valorconnectsid, replace: true }}
     };
 
     const id_aleatorio = Math.floor(Math.random() * (id_filmes.length));
@@ -103,10 +100,8 @@ function acessarPerfilUsuario() {
      */
 
     const params =  {
-        headers: {  "Content-Type": "application/json" },
-        cookies: {  "koa": { value: koa, replace: true },
-            "koa.sig": { value: koasig, replace: true }
-        }
+        headers: { "Content-Type": "application/json" },
+        cookies: { "id": { value: valorconnectsid, replace: true }}
     };
 
     return http.get(url.perfil, params);
@@ -120,10 +115,11 @@ function acessarHome() {
 }
 
 export default function() {
+
     if(aux_cont === 0){
         const respostaAutenticacao = fazerLogin('mathias', '123');
         registraCookieId(respostaAutenticacao);
-        aux_cont ++
+        aux_cont ++;
     } else {
         acessarRotasAleatorio();
     }

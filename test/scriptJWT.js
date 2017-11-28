@@ -113,7 +113,7 @@ function acessarPerfilUsuario() {
 
 function acessarHome() {
     /**
-     * Rota principal da aplicação que não depende de autenticacao
+     * Rota principal.js da aplicação que não depende de autenticacao
      */
     return http.get(url.home);
 }
