@@ -16,7 +16,7 @@ const {home_rota} = require('./rotas/home');
 const {info_rota, perfil_rota} = require('./rotas/movieDetails');
 const {https_porta, http_porta} = require('../../bancoDeDados/servidorConfigs');
 const fs = require('fs');
-const executarHttps = process.argv[2] === 'https';
+const executarHttps = process.argv[4] === 'https';
 const server = new hapi.Server();
 
 module.exports = function () {

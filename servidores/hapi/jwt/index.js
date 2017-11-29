@@ -21,7 +21,7 @@ const {info_rota, perfil_rota} = require('./rotas/movieDetails');
 const {http_porta, https_porta} = require('./../../bancoDeDados/servidorConfigs');
 const fs = require('fs');
 const jwt_key = require('../../bancoDeDados/servidorConfigs').jwt.key;
-const executarHttps = process.argv[2] === 'https';
+const executarHttps = process.argv[4] === 'https';
 
 module.exports = function () {
 

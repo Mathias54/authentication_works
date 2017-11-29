@@ -19,7 +19,7 @@ const koaBody = require('koa-body');
 const {RotaPrincipal, RotaDetalheFilme, RotaPerfilUsuario} = require('../../respostas/principal');
 const {isValidUser} = require('../../bancoDeDados/User');
 const {https_porta, http_porta} = require('../../bancoDeDados/servidorConfigs');
-const executarHttps = process.argv[2] === 'https';
+const executarHttps = process.argv[4] === 'https';
 
 module.exports = function () {
 

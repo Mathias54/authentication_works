@@ -14,7 +14,7 @@ const https = require('https');
 const fs = require('fs');
 const app = require('./configuracoes/expressConfigs');
 const {http_porta, https_porta} = require('./../../bancoDeDados/servidorConfigs');
-const executarHttps = process.argv[2] === 'https';
+const executarHttps = process.argv[4] === 'https';
 
 module.exports = function () {
     if(executarHttps){
