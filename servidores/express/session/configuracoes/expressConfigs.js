@@ -18,7 +18,7 @@ app.use(session({
         maxAge: 100000
     },
     store: new MongoDBStore({
-        uri: 'mongodb://localhost:27017/tcc_mathias',
+        uri: 'mongodb://mathias:mathias_regio_roben@108.61.171.61:5000,45.77.158.248:4000,45.77.14.11:3000/admin?replicaSet=tttv1',
         collection: 'mySessions'
     }),
     resave: true,
