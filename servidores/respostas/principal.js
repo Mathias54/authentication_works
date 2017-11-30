@@ -19,11 +19,13 @@ function RotaPrincipal(callback) {
                 .limit(100)
                 .toArray((erro, dados)=>{
                     if(!erro){
+                        db.close();
                         callback({
                             sucesso: true,
                             dados: dados
                         })
                     } else {
+                        db.close();
                         callback({
                             sucesso: false,
                             erro: `Erro ao listar filmes: ${erro}`
@@ -50,11 +52,13 @@ function RotaDetalheFilme(id, callback) {
         if (!erro){
             db.collection('movieDetails').findOne({"_id": new ObjectID(id)}, (erro, dado)=>{
                 if(!erro && dado !== null){
+                    db.close();
                     callback({
                         sucesso: true,
                         dado: dado
                     })
                 } else {
+                    db.close();
                     callback({
                         sucesso: false,
                         erro: `Erro na busca do filme: ${erro}`
@@ -82,11 +86,13 @@ function RotaPerfilUsuario(id, callback) {
             db.collection('usuario').findOne({"_id": new ObjectID(id)}, (erro, dado)=>{
                 if(!erro){
                     delete dado.senha;
+                    db.close();
                     callback({
                         sucesso: true,
                         dado: dado
                     })
                 } else {
+                    db.close();
                     callback({
                         sucesso: false,
                         erro: `Erro na busca do usuario: ${erro}`

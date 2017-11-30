@@ -6,13 +6,6 @@
  * Exemplo de código com o JWT funcionando no Hapi.js
  */
 
-const {performance} = require('perf_hooks');
-global.marcador = performance;
-global.compararMarks = function (nome, p1, p2) {
-    performance.measure(nome, p1, p2);
-    console.log(performance.getEntriesByName(nome));
-    // TODO persistir banco de dados o resultado.... analisar....
-};
 
 const Hapi = require('hapi');
 const {cadastro_rota, login_rota} = require('./rotas/autenticacao');

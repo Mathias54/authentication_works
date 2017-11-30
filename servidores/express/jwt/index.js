@@ -2,20 +2,13 @@
  * Created by mathias on 22/07/17.
  */
 
-const { performance } = require('perf_hooks');
-global.marcador = performance;
-global.compararMarks = function (nome, p1, p2) {
-    performance.measure(nome, p1, p2);
-    console.log(performance.getEntriesByName(nome));
-    // TODO persistir banco de dados o resultado.... analisar....
-};
 
 const http = require('http');
 const https = require('https');
 const app = require('./configuracoes/expressConfigs');
 const fs = require('fs');
 const {http_porta, https_porta} = require('./../../bancoDeDados/servidorConfigs');
-const executarHttps = process.argv[2] === 'https';
+const executarHttps = process.argv[4] === 'https';
 
 
 module.exports = function () {

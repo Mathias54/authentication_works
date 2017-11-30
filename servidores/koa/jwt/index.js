@@ -4,14 +4,6 @@
 /**
  * Created by mathias on 12/09/17.
  */
-const {performance} = require('perf_hooks');
-global.marcador = performance;
-global.compararMarks = function (nome, p1, p2) {
-    performance.measure(nome, p1, p2);
-    console.log(performance.getEntriesByName(nome));
-    // TODO persistir banco de dados o resultado.... analisar....
-};
-
 
 const jwt = require('jsonwebtoken');
 const http = require('http');
@@ -73,7 +65,6 @@ module.exports = function () {
                 });
             });
         } else {
-            console.log('proximo');
             await next();
         }
     });
@@ -89,7 +80,6 @@ module.exports = function () {
             await new Promise((resolve, reject) => {
                 RotaPrincipal(resultado => {
                     if (resultado.sucesso) {
-                        console.log(resultado.dados);
                         ctx.body = resultado.dados;
                         marcador.mark('FIM_HOME');
                         compararMarks('HOME_KOA_JWT', 'INI_HOME', 'FIM_HOME');
@@ -181,7 +171,6 @@ module.exports = function () {
      */
     app.use(async (ctx, next) => {
         const rota = ctx.path.split('/');
-        console.log(rota);
         if (rota[1] === 'filme') {
             if (rota[2]) {
                 marcador.mark('INI_FILMEID');
