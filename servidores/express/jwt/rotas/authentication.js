@@ -1,6 +1,8 @@
 /**
  * Created by mathias on 22/07/17.
  */
+const {marcador, compararMarks} = require('../../../medicao/index');
+
 const jwt = require('jsonwebtoken');
 const jwt_key = require('../../../bancoDeDados/servidorConfigs').jwt.key;
 const {isValidUser, cadastrarUser} = require('../../../bancoDeDados/User');

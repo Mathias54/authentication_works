@@ -3,6 +3,7 @@
  */
 const jwt_key = require('../../../bancoDeDados/servidorConfigs').jwt.key;
 const jwt = require('jsonwebtoken');
+const {marcador, compararMarks} = require('../../../medicao/index');
 
 module.exports = function (req, res, next) {
     marcador.mark('INI_MIDDLEWARE');

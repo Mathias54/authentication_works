@@ -2,7 +2,6 @@
  * Created by mathias on 22/07/17.
  */
 
-
 const http = require('http');
 const https = require('https');
 const app = require('./configuracoes/expressConfigs');

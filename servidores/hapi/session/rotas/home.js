@@ -3,6 +3,7 @@
  */
 
 const {RotaPrincipal} = require(__dirname + '/../../../respostas/principal.js');
+const {marcador, compararMarks} = require('../../../medicao/index');
 
 module.exports = {
 

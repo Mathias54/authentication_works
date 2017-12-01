@@ -17,6 +17,7 @@ const {RotaPrincipal, RotaDetalheFilme, RotaPerfilUsuario} = require('../../resp
 const {isValidUser} = require('../../bancoDeDados/User');
 const {http_porta, https_porta} = require('../../bancoDeDados/servidorConfigs');
 const executarHttps = process.argv[4] === 'https';
+const {marcador, compararMarks} = require('../../medicao/index');
 
 module.exports = function () {
     app.use(koaBody());

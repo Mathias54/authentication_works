@@ -4,6 +4,7 @@
 const {isValidUser, cadastrarUser} = require(__dirname + '/../../../bancoDeDados/User');
 const jwt = require('jsonwebtoken');
 const jwt_key = require(__dirname + '/../../../bancoDeDados/servidorConfigs').jwt.key;
+const {marcador, compararMarks} = require('../../../medicao/index');
 
 module.exports = {
 

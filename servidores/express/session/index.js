@@ -1,7 +1,6 @@
 /**
  * Created by mathias on 16/09/17.
  */
-
 const http = require('http');
 const https = require('https');
 const fs = require('fs');

@@ -23,6 +23,7 @@ console.log(url);
  */
 module.exports = function (callback) {
     MongoClient.connect(url, (err, db) =>{
-        callback(err, db.db('tcc_mathias'));
+        if(!err)
+            callback(err, db.db('tcc_mathias'));
     });
 };

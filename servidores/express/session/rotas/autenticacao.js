@@ -1,6 +1,7 @@
 /**
  * Created by mathias on 16/09/17.
  */
+const {marcador, compararMarks} = require('../../../medicao/index');
 const {isValidUser, cadastrarUser} = require('../../../bancoDeDados/User');
 
 module.exports = (app) =>{

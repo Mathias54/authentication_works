@@ -2,6 +2,7 @@
  * Created by mathias on 16/09/17.
  */
 
+const {marcador, compararMarks} = require('../../../medicao/index');
 
 module.exports = function middlewareSession(req, res, next) {
     marcador.mark('INI_MIDDLEWARE');

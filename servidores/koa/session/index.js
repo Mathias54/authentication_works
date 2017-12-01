@@ -13,6 +13,7 @@ const {RotaPrincipal, RotaDetalheFilme, RotaPerfilUsuario} = require('../../resp
 const {isValidUser} = require('../../bancoDeDados/User');
 const {https_porta, http_porta} = require('../../bancoDeDados/servidorConfigs');
 const executarHttps = process.argv[4] === 'https';
+const {marcador, compararMarks} = require('../../medicao/index');
 
 module.exports = function () {
 

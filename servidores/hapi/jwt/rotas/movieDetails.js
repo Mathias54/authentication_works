@@ -2,6 +2,7 @@
  * Created by mathias on 18/09/17.
  */
 const {RotaDetalheFilme, RotaPerfilUsuario} = require(__dirname + '/../../../respostas/principal.js');
+const {marcador, compararMarks} = require('../../../medicao/index');
 
 module.exports = {
 

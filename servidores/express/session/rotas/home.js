@@ -1,7 +1,7 @@
 /**
  * Created by mathias on 22/07/17.
  */
-
+const {marcador, compararMarks} = require('../../../medicao/index');
 const {RotaPrincipal} = require('../../../respostas/principal');
 module.exports = function (app) {
 

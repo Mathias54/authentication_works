@@ -1,6 +1,8 @@
 /**
  * Created by mathias on 16/08/17.
  */
+const {marcador, compararMarks} = require('../../../medicao/index');
+
 const sessionMiddleware = require('../middleware/sessionMiddleware');
 const {RotaDetalheFilme, RotaPerfilUsuario} = require('../../../respostas/principal');
 
