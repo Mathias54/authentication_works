@@ -7,13 +7,13 @@ const {marcador, compararMarks} = require('../../../medicao/index');
 module.exports = {
 
     info_rota: (request, reply) => {
-        marcador.mark('FIM_FILMEID');
+        marcador.mark('INI_FILMEID');
         const id = request.params.id;
         RotaDetalheFilme(id, retorno => {
             if (retorno.sucesso) {
                 reply(retorno.dado);
                 marcador.mark('FIM_FILMEID');
-                compararMarks('FILMEID_HAPI_JWT', 'INI_FILMEIF', 'FIM_FILMEID');
+                compararMarks('FILMEID_HAPI_JWT', 'INI_FILMEID', 'FIM_FILMEID');
             } else {
                 reply(`Erro ao listar detalhes do filme: ${retorno.erro}`);
             }

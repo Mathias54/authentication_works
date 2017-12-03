@@ -142,7 +142,7 @@ module.exports = function () {
                         } else {
                             ctx.body = retorno.dado;
                             marcador.mark('FIM_FILMEID');
-                            compararMarks('FILMEID_KOA_SESSION', 'INI_FILMEIF', 'FIM_FILMEID');
+                            compararMarks('FILMEID_KOA_SESSION', 'INI_FILMEID', 'FIM_FILMEID');
                             resolve();
                         }
                     });

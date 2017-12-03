@@ -6,7 +6,7 @@ export let options = {
     duration: "30s"
 };
 
-const dominio = '192.168.0.15';
+const dominio = 'liberep.com';
 
 const url = {
     home: `http://${dominio}:3000`,
@@ -148,6 +148,7 @@ function loginAleatorio(){
 }
 
 export default function() {
+
     if(aux_cont === 0){
         const respostaAutenticacao = loginAleatorio();
         registraCookieId(respostaAutenticacao);
@@ -155,5 +156,7 @@ export default function() {
     } else {
         acessarRotasAleatorio();
     }
-    // sleep(1);
+
+    // console.log(JSON.stringify(loginAleatorio().cookies));
+    sleep(1);
 };

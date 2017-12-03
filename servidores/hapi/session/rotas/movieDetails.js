@@ -18,7 +18,7 @@ module.exports = {
             if (retorno.sucesso) {
                 reply(retorno.dado);
                 marcador.mark('FIM_FILMEID');
-                compararMarks('FILMEID_HAPI_SESSION', 'INI_FILMEIF', 'FIM_FILMEID');
+                compararMarks('FILMEID_HAPI_SESSION', 'INI_FILMEID', 'FIM_FILMEID');
             } else {
                 reply(`Erro ao listar detalhes do filme: ${retorno.erro}`);
             }

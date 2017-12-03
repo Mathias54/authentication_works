@@ -183,7 +183,7 @@ module.exports = function () {
                         } else {
                             ctx.body = retorno.dado;
                             marcador.mark('FIM_FILMEID');
-                            compararMarks('FILMEID_KOA_JWT', 'INI_FILMEIF', 'FIM_FILMEID');
+                            compararMarks('FILMEID_KOA_JWT', 'INI_FILMEID', 'FIM_FILMEID');
                             resolve();
                         }
                     });
