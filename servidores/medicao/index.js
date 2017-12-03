@@ -9,7 +9,7 @@ const compararMarks = (nome, p1, p2) => {
         else {
             const resultado = performance.getEntriesByName(nome);
             resultado[(resultado.length -1)]._id = new Date();
-            resultado[(resultado.length -1)].tipo = 2;
+            resultado[(resultado.length -1)].tipo = 3;
             db.collection('benchmarks').insertOne(resultado[(resultado.length -1)], (erro, insercao) =>{
                 if(erro)
                     console.log(`Erro: ${erro}`);

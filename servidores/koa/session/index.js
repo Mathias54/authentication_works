@@ -66,7 +66,6 @@ module.exports = function () {
                 });
             });
         } else {
-            console.log('proximo');
             await next();
         }
     });
@@ -127,7 +126,6 @@ module.exports = function () {
      */
     app.use(async (ctx, next) => {
         const rota = ctx.path.split('/');
-        console.log(rota);
         if (rota[1] === 'filme') {
             marcador.mark('INI_FILMEID');
             if (!ctx.session.logado) {

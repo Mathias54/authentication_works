@@ -14,7 +14,6 @@ module.exports = (app) =>{
             usuario: req.body.login || req.body.email || req.body.nome || req.body.user || req.body.name || req.body.usuario,
             senha: req.body.password || req.body.senha
         };
-        console.log(user);
 
         isValidUser(user, (erro, user) =>{
             if(!erro && user){

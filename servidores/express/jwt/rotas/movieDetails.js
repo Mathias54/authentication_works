@@ -24,7 +24,6 @@ module.exports = function (app) {
     app.get('/perfil/', jwt, (req, res)=>{
         marcador.mark('INI_PERFIL');
         const id = req.sessao.id;
-        console.log(req.sessao);
         RotaPerfilUsuario(id, retorno =>{
             if(retorno.sucesso){
                 res.json(retorno.dado);

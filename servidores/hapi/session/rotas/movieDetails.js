@@ -8,8 +8,6 @@ module.exports = {
 
     info_rota: (request, reply) => {
         marcador.mark('INI_FILMEID');
-        console.log(request.session.logado);
-        console.log(`Daddos do Session : ${JSON.stringify(request.session)}`);
         if(!request.session.logado){
             return reply('Autenticação necessário para acessar essa rota');
         }

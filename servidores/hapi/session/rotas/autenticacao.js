@@ -14,7 +14,6 @@ module.exports = {
             usuario: request.payload.login || request.payload.email || request.payload.nome || request.payload.user || request.payload.name || request.payload.usuario,
             senha: request.payload.password || request.payload.senha
         };
-        console.log(query);
 
         cadastrarUser(query, (erro, resultado) => {
             if (!erro) {

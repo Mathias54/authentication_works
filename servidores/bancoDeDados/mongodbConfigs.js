@@ -14,8 +14,6 @@ if(db_conf.replicaSet){
     url = `mongodb://${db_conf.usuario}:${db_conf.senha}@${db_conf.replicaSet.rs01},${db_conf.replicaSet.rs02},${db_conf.replicaSet.rs03}/${db_conf.db}?replicaSet=${db_conf.replicaSet.nome};`
 }
 
-console.log(url);
-
 /**
  * Função que encapsula a conexão com o MongoDB
  * @param callback (erro, db)

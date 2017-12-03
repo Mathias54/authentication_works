@@ -152,7 +152,6 @@ export default function() {
         acessarRotasAleatorio();
     }
 
-    sleep(1);
     // console.log(JSON.stringify(acessarHome().cookies['connect.sid'][0].value));
-    // sleep(1);
+    sleep(1);
 };

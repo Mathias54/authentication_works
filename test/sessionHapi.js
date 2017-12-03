@@ -153,5 +153,5 @@ export default function() {
     }
 
     // console.log( JSON.stringify(fazerLogin('mathias', '123').cookies.id[0].value));
-    // sleep(1);
+    sleep(1);
 };
