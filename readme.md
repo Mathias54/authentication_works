@@ -15,5 +15,5 @@ Esse repositório foi utilizado para o desenvolvimento das soluções utilizadas
 
 1) Desenvolvimento: Mathias Gheno Azzolini
 2) Orientador: Régio Michelin
-3) Co-Orientador: Roben Lunard
+3) Coorientador: Roben Lunardi
 
