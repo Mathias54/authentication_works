@@ -15,7 +15,7 @@ module.exports = function (app) {
             if(retorno.sucesso){
                 res.json(retorno.dado);
                 marcador.mark('FIM_FILMEID');
-                compararMarks('FILMEID_EXPRESS_SESSION', 'INI_FILMEIF', 'FIM_FILMEID');
+                compararMarks('FILMEID_EXPRESS_SESSION', 'INI_FILMEID', 'FIM_FILMEID');
             } else {
                 res.send(`Erro ao listar detalhes do filme: ${retorno.erro}`);
             }

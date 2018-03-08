@@ -1,17 +1,17 @@
 db.benchmarks.aggregate(
    [
      {
-        $match: { "tipo": 2 }  
+        $match: { "tipo": 4 }  
      },
      {
        $group:
          {
            _id: "$name",
-           avgAmount: { $avg: '$duration'}
+           avgDuration: { $avg: '$duration'},
          }
      },
      {
         $sort: {"_id": 1}
      }
    ]
-)
+);
