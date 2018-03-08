@@ -19,4 +19,4 @@ Esse repositório foi utilizado para o desenvolvimento das soluções utilizadas
 
 # Trabalho Escrito
 
-O .pdf do trabalho escrito pode ser acessad [aqui](/TCC/DESEMPENHO%20DE%20AUTENTICAÇÃO%20EM%20APLICAÇÕES%20WEB%20ESCALÁVEIS%20NO%20ECOSSISTEMA%20BACK-END%20JAVASCRIPT.pdf)
+O .pdf do trabalho escrito pode ser acessado [aqui](/TCC/DESEMPENHO%20DE%20AUTENTICAÇÃO%20EM%20APLICAÇÕES%20WEB%20ESCALÁVEIS%20NO%20ECOSSISTEMA%20BACK-END%20JAVASCRIPT.pdf)
