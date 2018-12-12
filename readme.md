@@ -1,6 +1,6 @@
 # Sobre o Repositório
 
-Esse repositório foi utilizado para o desenvolvimento das soluções utilizadas para o TCC Desempenho de Autenticaçõa em Aplicações Web Escaláveis no Ambiente JavaScript Back-End.
+Esse repositório foi utilizado para o desenvolvimento das soluções utilizadas para o TCC Desempenho de Autenticação em Aplicações Web Escaláveis no Ambiente JavaScript Back-End.
 
 # Tecnologias Utilizadas
 
